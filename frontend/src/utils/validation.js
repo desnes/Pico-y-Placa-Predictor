@@ -8,7 +8,7 @@ export const validateLicensePlate = (plate) => {
   };
   
 // Validate that all required fields are filled
-export const validateFields = (licensePlate, date, time) => {
+export const validateFields = (licensePlate) => {
 if (!validateLicensePlate(licensePlate)) {
     return 'Invalid license plate format. Please use one of the valid formats.';
 }

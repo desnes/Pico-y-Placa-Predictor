@@ -4,6 +4,7 @@ import './App.css';
 import { validateFields } from './utils/validation';
 
 function App() {
+  // Define state variables for form inputs, results, errors, and modal visibility
   const [licensePlate, setLicensePlate] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -18,11 +19,12 @@ function App() {
     setTime('');
   };
 
+  // Function to handle form submission and API call to check Pico y Placa
   const checkPicoPlaca = async (e) => {
     e.preventDefault();
     
     /// Validate the fields and license plate format
-    const validationError = validateFields(licensePlate, date, time);
+    const validationError = validateFields(licensePlate);
     if (validationError) {
       setError(validationError);
       setResult(null);
@@ -32,6 +34,7 @@ function App() {
     setError(null); // Clear any previous errors if validation passes
 
     try {
+      // Make a POST request to the backend API with the license plate, date, and time
       const response = await axios.post('http://localhost:3000/check-pico-placa', {
         licensePlate,
         date,
@@ -55,6 +58,8 @@ function App() {
   return (
     <div className="App min-h-screen flex flex-col items-center justify-center rounded-2xl">
       <h1 className="text-3xl font-bold mb-6 text-blue-800">Pico y Placa Predictor</h1>
+
+      {/* Form to check Pico y Placa status */}
       <form onSubmit={checkPicoPlaca} className="bg-gray-50 p-6 rounded shadow-md w-full max-w-md">
         <div className="mb-4">
           <label htmlFor="licensePlate" className="block text-blue-800 mb-2 text-left">Enter your vehicle's license plate</label>
@@ -93,7 +98,7 @@ function App() {
         </button>
       </form>
       
-      {/* Modal */}
+      {/* Modal to display the Pico y Placa result */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg">

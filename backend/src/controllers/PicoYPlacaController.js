@@ -2,21 +2,42 @@ const Car = require('../models/Car');
 const Motorcycle = require('../models/Motorcycle');
 const PicoPlacaService = require('../services/PicoYPlacaService');
 
-function checkPicoPlaca(req, res) {
-    const { licensePlate, date, time } = req.body;
-    
-    let vehicle;
+// Function to validate the license plate format and return the vehicle type (Car or Motorcycle)
+function getVehicleByLicensePlate(licensePlate) {
     if (/^[A-Z]{3}-\d{3,4}$/.test(licensePlate)) {
-        vehicle = new Car(licensePlate);
+        return new Car(licensePlate); // Valid car license plate
     } else if (/^[A-Z]{2}-\d{3}-[A-Z]{1}$/.test(licensePlate)) {
-        vehicle = new Motorcycle(licensePlate);
+        return new Motorcycle(licensePlate); // Valid motorcycle license plate
     } else {
-        return res.status(400).json({ message: 'Invalid license plate format' });
+        throw new Error('Invalid license plate format'); // Invalid license plate
     }
+}
 
-    const picoPlacaService = new PicoPlacaService(vehicle, date, time);
-    const canDrive = picoPlacaService.canDrive();
-    res.json({ canDrive });
+// Function to handle errors and send an appropriate response
+function handleError(res, error) {
+    res.status(400).json({ message: error.message });
+}
+
+// Controller function for checking Pico y Placa
+async function checkPicoPlaca(req, res) {
+    try {
+        const { licensePlate, date, time } = req.body;
+
+        // Validate and get vehicle instance
+        const vehicle = getVehicleByLicensePlate(licensePlate);
+
+        // Instantiate PicoPlacaService with vehicle, date, and time
+        const picoPlacaService = new PicoPlacaService(vehicle, date, time);
+
+        // Check if the vehicle can drive
+        const canDrive = picoPlacaService.canDrive();
+
+        // Send the result as JSON
+        res.json({ canDrive });
+    } catch (error) {
+        // Handle and send error response
+        handleError(res, error);
+    }
 }
 
 module.exports = { checkPicoPlaca };

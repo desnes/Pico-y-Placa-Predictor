@@ -1,10 +1,12 @@
 class PicoPlacaService {
+    // Constructor takes in the vehicle (either Car or Motorcycle object), date, and time
     constructor(vehicle, date, time) {
         this.vehicle = vehicle;
         this.date = new Date(date + 'T00:00:00'); // Date object with time set to 00:00:00
-        this.time = time;
+        this.time = time; // Time string in "HH:MM" format
     }
 
+    // Returns a mapping of last digits to restricted days
     getRestrictedDays() {
         return {
             '1': 'Monday',
@@ -20,6 +22,7 @@ class PicoPlacaService {
         };
     }
 
+    // Checks if the vehicle's last digit corresponds to a restricted day
     isRestrictedDay() {
         const lastDigit = this.vehicle.getLastDigit(); // Consistent method call for both cars and motorcycles
         const restrictedDay = this.getRestrictedDays()[lastDigit];
@@ -28,6 +31,7 @@ class PicoPlacaService {
         return restrictedDay === currentDay;
     }
 
+    // Checks if the current time falls within restricted hours
     isRestrictedTime() {
         const [hour, minute] = this.time.split(':').map(Number);
         const isInMorningHours = (hour === 7 && minute >= 0) || (hour === 8) || (hour === 9 && minute <= 30);
@@ -36,6 +40,7 @@ class PicoPlacaService {
         return isInMorningHours || isInAfternoonHours;
     }
 
+    // Determines if the vehicle can drive by checking both day and time restrictions
     canDrive() {
         return !(this.isRestrictedDay() && this.isRestrictedTime());
     }
