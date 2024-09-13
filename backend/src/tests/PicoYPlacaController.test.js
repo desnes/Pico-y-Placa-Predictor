@@ -1,4 +1,4 @@
-// src/tests/picoPlacaController.test.js
+
 const request = require('supertest');
 const express = require('express');
 const { checkPicoPlaca } = require('../controllers/PicoYPlacaController');
@@ -14,7 +14,7 @@ describe('POST /check-pico-placa', () => {
       .post('/check-pico-placa')
       .send({
         licensePlate: 'PBX-1233',
-        date: '2024-09-12', // jueves
+        date: '09-12-2024', // jueves
         time: '10:00'
       });
 
