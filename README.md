@@ -1,7 +1,10 @@
 
 # Pico y Placa Predictor
 
-This project is a **Pico y Placa Predictor** that helps users determine whether their vehicle is allowed on the road based on the Pico y Placa regulation in Quito, Ecuador. Users can input their vehicle's license plate, date, and time to see if they can drive on the specified date and time.
+This project is a Pico y Placa Predictor that helps users determine whether their vehicle is allowed on the road based on the Pico y Placa regulation in Quito, Ecuador. Users can input their vehicle's license plate, date, and time to check if they are permitted to drive on the specified date and time.
+
+Frontend: Built using React for a responsive and interactive user interface.
+Backend: Developed with Express to handle requests and apply the Pico y Placa logic efficiently.
 
 ---
 
@@ -137,6 +140,4 @@ npm test
 ```
 
 
-
 ---
-

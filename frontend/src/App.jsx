@@ -35,7 +35,7 @@ function App() {
 
     try {
       // Make a POST request to the backend API with the license plate, date, and time
-      const response = await axios.post('http://localhost:3000/check-pico-placa', {
+      const response = await axios.post('https://pico-y-placa-predictor.onrender.com/check-pico-placa', {
         licensePlate,
         date,
         time,
